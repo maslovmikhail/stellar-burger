@@ -2,7 +2,6 @@ import { useSelector } from '../../services/store';
 import { Navigate, useLocation } from 'react-router';
 import { ReactElement, useEffect } from 'react';
 import { Preloader } from '../ui/preloader';
-import { useParams } from 'react-router-dom';
 
 type ProtectedRouteProps = {
   onlyUnAuth?: boolean;
@@ -18,7 +17,6 @@ export const ProtectedRoute = ({
   const user = useSelector((state) => state.auth.data.name);
   const location = useLocation();
   const from = location.state?.from || { pathname: '/' };
-  const { number } = useParams();
 
   if (!isAuthChecked && loginRequested) {
     return <Preloader />;
