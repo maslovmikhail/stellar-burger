@@ -19,8 +19,14 @@ import {
   OrderInfo,
   ProtectedRoute
 } from '@components';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from '../../services/store';
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate
+} from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/store';
 import { fetchIngredients } from '../../services/slices/ingredientSlice';
 import { useEffect } from 'react';
 import { fetchGetUser } from '../../services/slices/userSlice';
@@ -32,9 +38,12 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (localStorage.getItem('resetPassword')) {
+      localStorage.removeItem('resetPassword');
+    }
     dispatch(fetchIngredients());
     dispatch(fetchGetUser());
-  }, []);
+  }, [dispatch]);
 
   const handleModalClose = () => {
     navigate(-1);
@@ -76,7 +85,11 @@ const App = () => {
           path='/reset-password'
           element={
             <ProtectedRoute onlyUnAuth>
-              <ResetPassword />
+              {localStorage.getItem('resetPassword') ? (
+                <ResetPassword />
+              ) : (
+                <Navigate to='/' />
+              )}
             </ProtectedRoute>
           }
         />
@@ -128,9 +141,11 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal title={'Информация о заказе'} onClose={handleModalClose}>
-                <OrderInfo />
-              </Modal>
+              <ProtectedRoute>
+                <Modal title={'Информация о заказе'} onClose={handleModalClose}>
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
             }
           />
         </Routes>

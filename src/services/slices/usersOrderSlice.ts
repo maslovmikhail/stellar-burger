@@ -17,7 +17,7 @@ const initialState: TFeedSliceState = {
 
 export const fetchUserOrdersApi = createAsyncThunk(
   'userOrders/fetchUserOrdersApi',
-  async () => getOrdersApi()
+  getOrdersApi
 );
 
 const userOrdersSlice = createSlice({

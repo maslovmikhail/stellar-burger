@@ -31,9 +31,7 @@ export const fetchLoginUser = createAsyncThunk(
     })
 );
 
-export const fetchGetUser = createAsyncThunk('user/fetchGetUser', async () =>
-  getUserApi()
-);
+export const fetchGetUser = createAsyncThunk('user/fetchGetUser', getUserApi);
 
 export const fetchUpdateUser = createAsyncThunk(
   'user/fetchUpdateUser',
@@ -102,6 +100,7 @@ const userSlice = createSlice({
       .addCase(fetchLoginUser.fulfilled, (state, action) => {
         state.isAuthenticated = true;
         state.data.email = action.payload.user.email;
+        state.data.name = action.payload.user.name;
       })
       .addCase(fetchGetUser.pending, (state) => {
         state.loginUserRequest = true;
@@ -136,6 +135,10 @@ const userSlice = createSlice({
         state.loginUserRequest = true;
       })
       .addCase(fetchLogout.fulfilled, (state) => {
+        state.data = {
+          email: '',
+          name: ''
+        };
         state.isAuthenticated = true;
         state.loginUserRequest = false;
       });

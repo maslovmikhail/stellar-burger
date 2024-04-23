@@ -25,7 +25,7 @@ export const BurgerConstructor: FC = () => {
 
   const onOrderClick = () => {
     if (!user) {
-      navigate('/login');
+      return navigate('/login');
     }
 
     const { bun, ingredients } = items;
@@ -43,9 +43,9 @@ export const BurgerConstructor: FC = () => {
   };
 
   const closeOrderModal = () => {
-    navigate('/', { replace: true });
     dispatch(clearOrder());
     dispatch(clearConstructor());
+    navigate('/', { replace: true });
   };
 
   const price = useMemo(
