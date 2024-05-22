@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getFeedsApi } from '@api';
+import { getFeedsApi } from '../../../src/utils/burger-api';
 import { TOrder } from '@utils-types';
 
-type TFeedSliceState = {
+export type TFeedSliceState = {
   feeds: TOrder[];
   feedIsLoading: boolean;
   total: number;
