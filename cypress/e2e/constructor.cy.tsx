@@ -1,8 +1,11 @@
+const ingredientDetails = 'Детали ингредиента';
+const bun = 'Краторная булка N-200i';
+
 describe('Проверка добавления ингредиента из списка в конструктор', () => {
   beforeEach(() => {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
     cy.viewport(1300, 800);
-    cy.visit('http://localhost:4000/');
+    cy.visit('/');
   });
 
   it('Добавление булок и начинок в заказ', () => {
@@ -11,7 +14,7 @@ describe('Проверка добавления ингредиента из сп
     cy.get('[data-cy=sauces-ingredients]').contains('Добавить').click();
 
     cy.get('[data-cy=constructor-bun-1]')
-      .contains('Краторная булка N-200i')
+      .contains(bun)
       .should('exist');
 
     cy.get('[data-cy=constructor-ingredients]')
@@ -23,7 +26,7 @@ describe('Проверка добавления ингредиента из сп
       .should('exist');
 
     cy.get('[data-cy=constructor-bun-2]')
-      .contains('Краторная булка N-200i')
+      .contains(bun)
       .should('exist');
   });
 });
@@ -32,28 +35,28 @@ describe('Проверка работы модальных окон', () => {
   beforeEach(() => {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
     cy.viewport(1300, 800);
-    cy.visit('http://localhost:4000/');
+    cy.visit('/');
   });
 
   it('Открытие модального окна ингредиента', () => {
-    cy.contains('Детали ингредиента').should('not.exist');
-    cy.contains('Краторная булка N-200i').click();
-    cy.contains('Детали ингредиента').should('exist');
-    cy.get('#modals').contains('Краторная булка N-200i').should('exist');
+    cy.contains(ingredientDetails).should('not.exist');
+    cy.contains(bun).click();
+    cy.contains(ingredientDetails).should('exist');
+    cy.get('#modals').contains(bun).should('exist');
   });
 
   it('Закрытие модального окна по клику на крестик', () => {
-    cy.contains('Краторная булка N-200i').click();
-    cy.contains('Детали ингредиента').should('exist');
+    cy.contains(bun).click();
+    cy.contains(ingredientDetails).should('exist');
     cy.get('#modals button svg').click();
-    cy.contains('Детали ингредиента').should('not.exist');
+    cy.contains(ingredientDetails).should('not.exist');
   });
 
   it('Закрытие модального окна по клику на оверлей', () => {
-    cy.contains('Краторная булка N-200i').click();
-    cy.contains('Детали ингредиента').should('exist');
+    cy.contains(bun).click();
+    cy.contains(ingredientDetails).should('exist');
     cy.get('[data-cy=modal-overlay]').click('left', { force: true });
-    cy.contains('Детали ингредиента').should('not.exist');
+    cy.contains(ingredientDetails).should('not.exist');
   });
 });
 
@@ -69,7 +72,7 @@ describe('Проверка создания заказа', () => {
     );
     cy.setCookie('accessToken', 'test-accessToken');
     cy.viewport(1300, 800);
-    cy.visit('http://localhost:4000');
+    cy.visit('/');
   });
 
   afterEach(() => {
@@ -99,7 +102,7 @@ describe('Проверка создания заказа', () => {
     cy.contains('[data-cy=order-number]').should('not.exist');
 
     cy.get('[data-cy=constructor]')
-      .contains('Краторная булка N-200i')
+      .contains(bun)
       .should('not.exist');
     cy.get('[data-cy=constructor]')
       .contains('Биокотлета из марсианской Магнолии')

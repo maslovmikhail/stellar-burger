@@ -1,4 +1,4 @@
-import { TFeedSliceState, feedReducer, fetchFeedsApi } from './feedSlice';
+import { feedReducer, fetchFeedsApi, initialState } from './feedSlice';
 import { TFeedsResponse } from '../../utils/burger-api';
 import { TOrder } from '../../utils/types';
 
@@ -48,14 +48,6 @@ const userOrders: TOrder[] = [
 ];
 
 describe('Проверка экшенов получения общего списка заказов', () => {
-  const initialState: TFeedSliceState = {
-    feeds: [],
-    feedIsLoading: false,
-    total: 0,
-    totalToday: 0,
-    error: undefined
-  };
-
   test('Проверка fetchFeedsApi pending', () => {
     const actualState = feedReducer(
       {
@@ -101,11 +93,9 @@ describe('Проверка экшенов получения общего спи
   test('Проверка fetchFeedsApi rejected', () => {
     const testError = new Error('Test Error');
 
-    const expectedState: TFeedSliceState = {
-      feeds: [],
+    const expectedState = {
+      ...initialState,
       feedIsLoading: false,
-      total: 0,
-      totalToday: 0,
       error: testError.message
     };
 

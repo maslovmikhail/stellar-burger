@@ -13,7 +13,7 @@ export type TBurgerConstructorSliceState = {
   error: string | null;
 };
 
-const initialState: TBurgerConstructorSliceState = {
+export const initialState: TBurgerConstructorSliceState = {
   constructorItems: {
     bun: null,
     ingredients: []

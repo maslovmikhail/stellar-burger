@@ -1,11 +1,11 @@
 import {
-  TBurgerConstructorSliceState,
   addIngredients,
   removeIngredient,
   burgerConstructorReducer,
   ingredientsToUp,
   ingredientsToDown,
-  clearConstructor
+  clearConstructor,
+  initialState
 } from './constructorSlice';
 import { data } from '../../../cypress/fixtures/ingredients.json';
 
@@ -55,15 +55,6 @@ const sauce = {
 };
 
 describe('Проверка редьюсера слайса constructor', () => {
-  const initialState: TBurgerConstructorSliceState = {
-    constructorItems: {
-      bun: null,
-      ingredients: []
-    },
-    isIngredientsLoading: false,
-    error: null
-  };
-
   test('Добавление ингредиента', () => {
     const actualState = burgerConstructorReducer(
       {
@@ -87,18 +78,13 @@ describe('Проверка редьюсера слайса constructor', () => {
   });
 
   test('Удаление игредиента', () => {
-    const initialState: TBurgerConstructorSliceState = {
-      constructorItems: {
-        bun: bun,
-        ingredients: [main, sauce]
-      },
-      isIngredientsLoading: false,
-      error: null
-    };
-
     const actualState = burgerConstructorReducer(
       {
-        ...initialState
+        ...initialState,
+        constructorItems: {
+          bun: bun,
+          ingredients: [main, sauce]
+        }
       },
       removeIngredient(sauce)
     );
@@ -109,18 +95,13 @@ describe('Проверка редьюсера слайса constructor', () => {
   });
 
   test('Передвижение ингредиентов вверх', () => {
-    const initialState: TBurgerConstructorSliceState = {
-      constructorItems: {
-        bun: bun,
-        ingredients: [main, sauce]
-      },
-      isIngredientsLoading: false,
-      error: null
-    };
-
     const stateForMoveUp = burgerConstructorReducer(
       {
-        ...initialState
+        ...initialState,
+        constructorItems: {
+          bun: bun,
+          ingredients: [main, sauce]
+        }
       },
       ingredientsToUp(1)
     );
@@ -131,18 +112,13 @@ describe('Проверка редьюсера слайса constructor', () => {
   });
 
   test('Передвигание ингредиентов вниз', () => {
-    const initialState: TBurgerConstructorSliceState = {
-      constructorItems: {
-        bun: bun,
-        ingredients: [main, sauce, main]
-      },
-      isIngredientsLoading: false,
-      error: null
-    };
-
     const stateForMoveDown = burgerConstructorReducer(
       {
-        ...initialState
+        ...initialState,
+        constructorItems: {
+          bun: bun,
+          ingredients: [main, sauce, main]
+        }
       },
       ingredientsToDown(1)
     );
@@ -153,17 +129,14 @@ describe('Проверка редьюсера слайса constructor', () => {
   });
 
   test('Очистка конструктора', () => {
-    const initialState: TBurgerConstructorSliceState = {
-      constructorItems: {
-        bun: bun,
-        ingredients: [main, sauce]
-      },
-      isIngredientsLoading: false,
-      error: null
-    };
-
     const actualState = burgerConstructorReducer(
-      initialState,
+      {
+        ...initialState,
+        constructorItems: {
+          bun: bun,
+          ingredients: [main, sauce]
+        }
+      },
       clearConstructor()
     );
 

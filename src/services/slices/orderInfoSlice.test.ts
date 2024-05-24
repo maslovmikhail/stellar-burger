@@ -1,7 +1,7 @@
 import { TOrder } from '@utils-types';
 import {
-  TOrderByNumberSliceState,
   fetchOrderByNumber,
+  initialState,
   orderNuNumberReducer
 } from '../../services/slices/orderInfoSlice';
 import { TOrderResponse } from '../../utils/burger-api';
@@ -52,12 +52,6 @@ const userOrders: TOrder[] = [
 ];
 
 describe('Проверка экшенов получения информации о заказе', () => {
-  const initialState: TOrderByNumberSliceState = {
-    orders: [],
-    orderIsLoading: false,
-    error: undefined
-  };
-
   test('Проверка pending', () => {
     const actualState = orderNuNumberReducer(
       {
@@ -98,8 +92,7 @@ describe('Проверка экшенов получения информаци�
     const testError = new Error('Test Error');
 
     const expectedState = {
-      orders: [],
-      orderIsLoading: false,
+      ...initialState,
       error: testError.message
     };
 

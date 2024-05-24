@@ -11,7 +11,7 @@ export type TFeedSliceState = {
   error: string | undefined;
 };
 
-const initialState: TFeedSliceState = {
+export const initialState: TFeedSliceState = {
   feeds: [],
   feedIsLoading: false,
   total: 0,

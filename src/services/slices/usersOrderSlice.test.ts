@@ -1,7 +1,7 @@
 import { TOrder } from '@utils-types';
 import {
-  TFeedSliceState,
   fetchUserOrdersApi,
+  initialState,
   userOrderReducer
 } from '../../services/slices/usersOrderSlice';
 
@@ -51,12 +51,6 @@ const userOrders: TOrder[] = [
 ];
 
 describe('Проверка экшенов получения пользовательских заказов', () => {
-  const initialState: TFeedSliceState = {
-    userOrders: [],
-    userOrdersIsLoading: false,
-    error: undefined
-  };
-
   test('Проверка pending', () => {
     const actualState = userOrderReducer(
       {
@@ -91,9 +85,8 @@ describe('Проверка экшенов получения пользоват�
   test('Проверка rejected', () => {
     const testError = new Error('Test Error');
 
-    const expectedState: TFeedSliceState = {
-      userOrders: [],
-      userOrdersIsLoading: false,
+    const expectedState = {
+      ...initialState,
       error: testError.message
     };
 

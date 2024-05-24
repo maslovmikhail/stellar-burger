@@ -2,7 +2,7 @@ import {
   fetchIngredients,
   getIngredientsAdded,
   ingredientsReducer,
-  TIngredientSliceState
+  initialState
 } from '../../services/slices/ingredientSlice';
 
 const main = {
@@ -21,12 +21,6 @@ const main = {
 };
 
 describe('Проверка экшенов загрузки ингредиентов', () => {
-  const initialState: TIngredientSliceState = {
-    ingredients: [],
-    isIngredientsLoading: false,
-    error: undefined
-  };
-
   test('Проверка pending', () => {
     const actualState = ingredientsReducer(
       {
@@ -78,9 +72,8 @@ describe('Проверка экшенов загрузки ингредиент�
   test('Проверка reject', () => {
     const testError = new Error('Test Error');
 
-    const expectedState: TIngredientSliceState = {
-      ingredients: [],
-      isIngredientsLoading: false,
+    const expectedState = {
+      ...initialState,
       error: testError.message
     };
 

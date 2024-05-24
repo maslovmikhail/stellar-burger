@@ -9,7 +9,7 @@ export type TFeedSliceState = {
   error: string | undefined;
 };
 
-const initialState: TFeedSliceState = {
+export const initialState: TFeedSliceState = {
   userOrders: [],
   userOrdersIsLoading: false,
   error: undefined

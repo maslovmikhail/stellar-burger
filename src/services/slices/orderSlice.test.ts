@@ -1,8 +1,8 @@
 import { TOrder } from '@utils-types';
 import {
-  TOrderSliceState,
   clearOrder,
   fetchOrderBurgerApi,
+  initialState,
   orderReducer
 } from '../../services/slices/orderSlice';
 import { TNewOrderResponse } from '../../utils/burger-api';
@@ -18,12 +18,6 @@ const order: TOrder = {
 };
 
 describe('Проверка экшенов отправки заказа', () => {
-  const initialState: TOrderSliceState = {
-    order: order,
-    orderIsLoading: false,
-    error: undefined
-  };
-
   test('Очистка заказа', () => {
     const actualState = orderReducer(initialState, clearOrder());
 
@@ -37,7 +31,8 @@ describe('Проверка экшенов отправки заказа', () => 
   test('Проверка pending', () => {
     const newState = orderReducer(
       {
-        ...initialState
+        ...initialState,
+        order: order
       },
       fetchOrderBurgerApi.pending('pending', [])
     );
@@ -74,15 +69,16 @@ describe('Проверка экшенов отправки заказа', () => 
   test('Проверка rejected', () => {
     const testError = new Error('Test Error');
 
-    const expectedState: TOrderSliceState = {
+    const expectedState = {
+      ...initialState,
       order: order,
-      orderIsLoading: false,
       error: testError.message
     };
 
     const actualState = orderReducer(
       {
         ...initialState,
+        order: order,
         orderIsLoading: true
       },
       fetchOrderBurgerApi.rejected(testError, 'rejected', [])

@@ -9,7 +9,7 @@ export type TOrderSliceState = {
   error: string | undefined;
 };
 
-const initialState: TOrderSliceState = {
+export const initialState: TOrderSliceState = {
   order: null,
   orderIsLoading: false,
   error: undefined
