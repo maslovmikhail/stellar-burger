@@ -1,15 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getOrdersApi } from '@api';
+import { getOrdersApi } from '../../../src/utils/burger-api';
 import { TOrder } from '@utils-types';
 
-type TFeedSliceState = {
+export type TFeedSliceState = {
   userOrders: TOrder[];
   userOrdersIsLoading: boolean;
   error: string | undefined;
 };
 
-const initialState: TFeedSliceState = {
+export const initialState: TFeedSliceState = {
   userOrders: [],
   userOrdersIsLoading: false,
   error: undefined

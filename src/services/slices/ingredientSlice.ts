@@ -5,17 +5,17 @@ import {
   createSlice
 } from '@reduxjs/toolkit';
 
-import { getIngredientsApi } from '@api';
+import { getIngredientsApi } from '../../../src/utils/burger-api';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
 import { RootState } from '../store';
 
-type IIngredientSliceState = {
+export type TIngredientSliceState = {
   ingredients: TIngredient[];
   isIngredientsLoading: boolean;
   error: string | undefined;
 };
 
-const initialState: IIngredientSliceState = {
+export const initialState: TIngredientSliceState = {
   ingredients: [],
   isIngredientsLoading: false,
   error: undefined
@@ -69,4 +69,6 @@ const ingredientsSlice = createSlice({
 
 export const { selectIngredients, selectIngredientsLoading } =
   ingredientsSlice.selectors;
+export const { getIngredients, getIngredientsAdded } = ingredientsSlice.actions;
+
 export const ingredientsReducer = ingredientsSlice.reducer;
