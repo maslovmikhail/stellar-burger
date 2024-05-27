@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getOrderByNumberApi } from '@api';
+import { getOrderByNumberApi } from '../../../src/utils/burger-api';
 import { TOrder } from '@utils-types';
 
-type TOrderByNumberSliceState = {
+export type TOrderByNumberSliceState = {
   orders: TOrder[];
   orderIsLoading: boolean;
   error: string | undefined;
@@ -36,7 +36,6 @@ const orderByNumberSlice = createSlice({
       .addCase(fetchOrderByNumber.rejected, (state, action) => {
         state.orderIsLoading = false;
         state.error = action.error.message;
-        console.log(state.error);
       })
       .addCase(fetchOrderByNumber.fulfilled, (state, action) => {
         state.orderIsLoading = false;
